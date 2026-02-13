@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nagjowa ka nang Programmer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: radial-gradient(circle, #ffafbd, #ffc3a0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Georgia', serif;
+        }
+
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ff758c; display: flex; justify-content: center;
+            align-items: center; z-index: 100; transition: opacity 1s ease;
+        }
+
+        .login-box {
+            background: white; padding: 30px; border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); text-align: center;
+            width: 80%; max-width: 300px;
+        }
+
+        input {
+            padding: 12px; border: 2px solid #ffafbd; border-radius: 8px;
+            width: 90%; font-size: 1rem; text-align: center; margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 30px; background: #ff4d6d; color: white;
+            border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
+        }
+
+        #errorMsg { color: #d63031; font-weight: bold; display: none; margin-top: 10px; font-size: 0.8rem;}
+        
+        .shake { animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+        #content {
+            display: none; 
+            width: 85%; 
+            max-width: 450px; 
+            max-height: 80vh; 
+            overflow-y: auto; 
+            text-align: center;
+            background: rgba(255, 255, 255, 0.92); 
+            padding: 25px;
+            border-radius: 25px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 2px solid white; 
+            z-index: 10;
+            box-sizing: border-box;
+            word-wrap: break-word; 
+        }
+
+        h1 { color: #ff4d6d; font-size: 1.8rem; margin-bottom: 15px; }
+        
+        #typewriter {
+            font-size: 1.1rem; color: #444; line-height: 1.6;
+            font-style: italic; margin-bottom: 20px;
+            white-space: pre-wrap; 
+        }
+
+        #surpriseBtn {
+            display: none; padding: 12px 25px; background: #4CAF50;
+            color: white; border: none; border-radius: 50px;
+            font-size: 1rem; cursor: pointer; font-weight: bold;
+            animation: bounce 2s infinite; margin-bottom: 10px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        #bouquetDisplay {
+            display: none; font-size: 4rem; margin-top: 15px;
+            animation: grow 1s ease-out;
+        }
+
+        @keyframes grow { from { transform: scale(0); } to { transform: scale(1); } }
+
+        .heart-particle {
+            position: absolute; color: #ff4d6d; font-size: 20px;
+            pointer-events: none; animation: fall linear forwards;
+        }
+
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <div class="login-box" id="box">
+            <h3 style="color: #ff4d6d; margin-top: 0;">Identity Verification ❤️</h3>
+            <input type="text" id="nameInput" placeholder="Kinsa ka? haha">
+            <br>
+            <button onclick="checkName()">Enter ❤️</button>
+            <div id="errorMsg">WHO THE FUCK ARE YOU?? BITCH 🤨</div>
+        </div>
+    </div>
+
+    <div id="content">
+        <h2>Happy Valentine's Day, Ga!</h2>
+        <div id="typewriter"></div>
+        <button id="surpriseBtn" onclick="showBouquet()">Click Me My Love💐</button>
+        <div id="bouquetDisplay">💐🌹🌷</div>
+        <p id="finalNote" style="display:none; color: #ff4d6d; font-weight: bold; margin-top: 10px; font-size: 0.9rem;">Virtual Flowers para saimo ga❤️</p>
+    </div>
+
+    <script>
+        const messageText = "To my dear Sheyniexh...\n\nI just wanted to take this moment \n to tell you how much you mean to me ga... \nIkaw ang akong one and only palangga awieee<3, \ndaw blesing sakoa this month kay wa ko gipasolo sa valentines HAHHAHAH.\nThough it is an LDR-RPW relationship, it's still feels good. \nBeyond those words... \nThank you for staying, for understanding, sending sweetposts and mentioning me to anywhere you want, this really means to me 100%, \nand also for loving me.\n\nI might not be the best man you'll ever had \nbut I assure you that I'm doing my best to be the best man you'll ever met. \n\nGaluha ko while typing this (tabanggg akong sip on pud hhaaha), \nbasin nalabian ka sincere akong message tagos kayu to the bones oue HUHUUHU\n\nHappy Valentine's Day Ga \nILOVEYOU❤️ \nkiss ko bi mwuahh";
+
+        function checkName() {
+            const name = document.getElementById('nameInput').value.trim();
+            const box = document.getElementById('box');
+            if (name.toLowerCase() === "sheyniexh") {
+                document.getElementById('overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('overlay').style.display = 'none';
+                    document.getElementById('content').style.display = 'block';
+                    startHearts();
+                    typeWriter();
+                }, 1000);
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+                box.classList.add('shake');
+                setTimeout(() => box.classList.remove('shake'), 400);
+            }
+        }
+
+        let i = 0;
+        function typeWriter() {
+            if (i < messageText.length) {
+                document.getElementById("typewriter").innerHTML += messageText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 70);
+            } else {
+                document.getElementById("surpriseBtn").style.display = "inline-block";
+            }
+        }
+
+        function showBouquet() {
+            document.getElementById("surpriseBtn").style.display = "none";
+            document.getElementById("bouquetDisplay").style.display = "block";
+            document.getElementById("finalNote").style.display = "block";
+            for(let j=0; j<15; j++) {
+                setTimeout(createHeart, j * 150);
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        function startHearts() {
+            setInterval(createHeart, 200);
+        }
+    </script>
+</body>
+</html>
